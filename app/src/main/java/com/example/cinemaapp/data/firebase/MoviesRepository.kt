@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.models.MovieItemModel
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MoviesRepository {
+class firebaseRepository {
 
     private val db = FirebaseFirestore.getInstance()
     private val moviesFavoriteCollection = db.collection("movies")
