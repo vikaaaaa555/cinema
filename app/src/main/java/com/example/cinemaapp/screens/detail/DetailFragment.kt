@@ -6,20 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cinemaapp.MAIN
 import com.example.cinemaapp.POSTER_PATH
 import com.example.cinemaapp.R
+import com.example.cinemaapp.data.firebase.MoviesRepository
 import com.example.cinemaapp.databinding.FragmentDetailBinding
 import com.example.cinemaapp.models.MovieItemModel
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailFragment : Fragment() {
 
     private var mBinding: FragmentDetailBinding?= null
     private val binding get() = mBinding!!
-    lateinit var currentMovie: MovieItemModel
+    private lateinit var currentMovie: MovieItemModel
     private var isFavorite = false
 
     override fun onCreateView(
@@ -30,6 +30,10 @@ class DetailFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             currentMovie = arguments?.getSerializable("movie", MovieItemModel::class.java) as MovieItemModel
         }
+
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("favorites")
+
         return binding.root
     }
 
@@ -39,7 +43,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun init() {
-        val viewModel = ViewModelProvider(this)[DetailFragmentViewModel::class.java]
         Glide.with(MAIN)
             .load("$POSTER_PATH${currentMovie.poster_path}")
             .centerCrop()
@@ -52,10 +55,13 @@ class DetailFragment : Fragment() {
         binding.imageDetailFavorite.setOnClickListener {
             isFavorite = if(!isFavorite) {
                 binding.imageDetailFavorite.setImageResource(R.drawable.baseline_favorite_24)
+                MoviesRepository().insert(currentMovie)
 
                 true
             } else {
                 binding.imageDetailFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
+                MoviesRepository().delete(currentMovie)
+
                 false
             }
         }
