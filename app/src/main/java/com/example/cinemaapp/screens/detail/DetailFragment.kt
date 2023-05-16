@@ -1,19 +1,26 @@
 package com.example.cinemaapp.screens.detail
 
+import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.cinemaapp.BASE_URL
 import com.example.cinemaapp.MAIN
 import com.example.cinemaapp.POSTER_PATH
 import com.example.cinemaapp.R
 import com.example.cinemaapp.data.firebase.MoviesRepository
 import com.example.cinemaapp.databinding.FragmentDetailBinding
 import com.example.cinemaapp.models.MovieItemModel
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class DetailFragment : Fragment() {
 
@@ -39,10 +46,12 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        val newFavoriteDocument = FirebaseFirestore.getInstance()
+            .collection("favorites").document()
+        init(newFavoriteDocument)
     }
 
-    private fun init() {
+    private fun init(newFavoriteDocument: DocumentReference) {
         Glide.with(MAIN)
             .load("$POSTER_PATH${currentMovie.poster_path}")
             .centerCrop()
@@ -52,16 +61,50 @@ class DetailFragment : Fragment() {
         binding.tvDate.text = currentMovie.release_date
         binding.tvDescrition.text = currentMovie.overview
 
-        binding.imageDetailFavorite.setOnClickListener {
-            isFavorite = if(!isFavorite) {
-                binding.imageDetailFavorite.setImageResource(R.drawable.baseline_favorite_24)
-                MoviesRepository().insert(currentMovie)
+        val favoritesCollection = Firebase.firestore.collection("favorites")
 
+        binding.imageDetailFavorite.setOnClickListener {
+            isFavorite = if (!isFavorite) {
+                binding.imageDetailFavorite.setImageResource(R.drawable.baseline_favorite_24)
+
+                // Создаем новый документ в коллекции и записываем туда данные фильма
+                favoritesCollection.document(currentMovie.id.toString())
+                    .set(currentMovie)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            this.requireContext(),
+                            "${currentMovie.title} added to favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this.requireContext(),
+                            "Error adding ${currentMovie.title} to favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 true
             } else {
                 binding.imageDetailFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
-                MoviesRepository().delete(currentMovie)
 
+                // Удаляем документ с данными фильма из коллекции
+                favoritesCollection.document(currentMovie.id.toString())
+                    .delete()
+                .addOnSuccessListener {
+                        Toast.makeText(
+                            this.requireContext(),
+                            "${currentMovie.title} removed from favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this.requireContext(),
+                            "Error removing ${currentMovie.title} from favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 false
             }
         }
