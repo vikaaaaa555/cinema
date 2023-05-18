@@ -16,10 +16,18 @@ class MainMenuProvider : MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.item_favorite -> {
-                MAIN.navController.navigate(R.id.action_mainFragment_to_favoriteFragment)
+                navigateToFavoriteList()
                 true
             }
             else -> false
+        }
+    }
+
+    private fun navigateToFavoriteList() {
+        val currentFragment = MAIN.navController.currentDestination?.id
+        when (currentFragment) {
+            R.id.mainFragment -> MAIN.navController.navigate(R.id.action_mainFragment_to_favoriteFragment)
+            R.id.detailFragment -> MAIN.navController.navigate(R.id.action_detailFragment_to_favoriteFragment)
         }
     }
 }
