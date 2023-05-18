@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.MAIN
 import com.example.cinemaapp.R
 import com.example.cinemaapp.databinding.FragmentMainBinding
+import com.example.cinemaapp.models.MovieItemModel
 
 class MainFragment : Fragment() {
 
@@ -31,15 +29,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        setupMenu()
     }
 
     private fun init() {
         val viewModel = ViewModelProvider(this)[MainFragmentViewModel::class.java]
-        viewModel.getMovies()
+        viewModel.initDatabase()
         recyclerView = binding.recycleviewMain
         recyclerView.adapter = adapter
         try {
+            viewModel.getMoviesRetrofit()
             viewModel.myMovies.observe(viewLifecycleOwner) { list ->  //возможно на строчке снизу нужно не viewLifecycleOwner, а this
                 adapter.setList(list.body()!!.results)
             }
@@ -53,21 +51,11 @@ class MainFragment : Fragment() {
         mBinding = null
     }
 
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) {
-                // Handle for example visibility of menu items
-            }
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.main_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                // Validate and handle the selected menu item
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    companion object {
+        fun clickMovie(model: MovieItemModel) {
+            val bundle = Bundle()
+            bundle.putSerializable("movie", model)
+            MAIN.navController.navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+        }
     }
-
 }
