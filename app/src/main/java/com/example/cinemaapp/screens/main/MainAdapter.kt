@@ -13,8 +13,8 @@ import com.example.cinemaapp.R
 import com.example.cinemaapp.models.MovieItemModel
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
-
     private var listMovies = emptyList<MovieItemModel>()
+
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
         val titleTextView: TextView = itemView.findViewById(R.id.item_title)
         val dateTextView: TextView = itemView.findViewById(R.id.item_date)
@@ -53,6 +53,6 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
     }
 
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
-        super.onViewDetachedFromWindow(holder)
+        holder.itemView.setOnClickListener(null)
     }
 }
