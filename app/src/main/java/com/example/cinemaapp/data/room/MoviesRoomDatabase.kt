@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.cinemaapp.data.room.dao.MoviesDao
-import com.example.cinemaapp.models.MovieItemModel
+import com.example.cinemaapp.models.movies.MovieItemModel
 
 @Database(entities = [MovieItemModel::class], version = 1)
 abstract class MoviesRoomDatabase: RoomDatabase() {
