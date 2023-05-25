@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">CinemaApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Jetflix</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="some_description">Some description</string>
+    <string name="choose_movie_category">Choose Movie Category</string>
+    <string name="_09_11_1938">09.11.1938</string>
+    <string name="popular">Popular</string>
+    <string name="most_popular_movies">Most popular movies</string>
+    <string name="favorites">Favorites</string>
+    <string name="_28_01_2004">28.01.2004</string>
 </resources>
