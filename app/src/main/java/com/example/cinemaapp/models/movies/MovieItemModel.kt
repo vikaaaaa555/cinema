@@ -1,4 +1,4 @@
-package com.example.cinemaapp.models
+package com.example.cinemaapp.models.movies
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -11,7 +11,6 @@ import java.io.Serializable
 @TypeConverters(GenreIdsConverter::class)
 data class MovieItemModel(
     @PrimaryKey(autoGenerate = true)
-    //если убрать все @ColumnInfo, то создадутся колоник со всеми названиямми переменных
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,

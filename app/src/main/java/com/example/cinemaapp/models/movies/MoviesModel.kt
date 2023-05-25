@@ -1,4 +1,4 @@
-package com.example.cinemaapp.models
+package com.example.cinemaapp.models.movies
 
 data class MoviesModel(
     val page: Int,
