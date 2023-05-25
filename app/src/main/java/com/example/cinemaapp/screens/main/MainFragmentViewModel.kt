@@ -9,7 +9,7 @@ import com.example.cinemaapp.REALIZATION
 import com.example.cinemaapp.data.retrofit.RetrofitRepository
 import com.example.cinemaapp.data.room.MoviesRoomDatabase
 import com.example.cinemaapp.data.room.repository.MoviesRepositoryRealization
-import com.example.cinemaapp.models.MoviesModel
+import com.example.cinemaapp.models.movies.MoviesModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -21,7 +21,7 @@ class MainFragmentViewModel(application: Application): AndroidViewModel(applicat
     fun getMoviesRetrofit() {
         viewModelScope.launch {
             try {
-                myMovies.value = repository.getMovies()
+                myMovies.value = repository.getPopularMovies()
             } catch (e: Exception) {
                 Log.e("Error", e.message.toString())
             }
