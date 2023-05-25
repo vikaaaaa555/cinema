@@ -1,21 +1,17 @@
 package com.example.cinemaapp.screens.favorite
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.MAIN
 import com.example.cinemaapp.R
 import com.example.cinemaapp.databinding.FragmentFavoriteBinding
-import com.example.cinemaapp.models.MovieItemModel
-import com.example.cinemaapp.screens.main.MainAdapter
+import com.example.cinemaapp.models.movies.MovieItemModel
 
 class FavoriteFragment : Fragment() {
 
@@ -39,6 +35,11 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().title = "Favorites"
+        (requireActivity() as AppCompatActivity).supportActionBar?.customView = null
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
+
         init()
     }
 
