@@ -2,7 +2,7 @@ package com.example.cinemaapp.data.room.repository
 
 import androidx.lifecycle.LiveData
 import com.example.cinemaapp.data.room.dao.MoviesDao
-import com.example.cinemaapp.models.MovieItemModel
+import com.example.cinemaapp.models.movies.MovieItemModel
 
 class MoviesRepositoryRealization(private val moviesDao: MoviesDao): MoviesRepository {
     override val allMovies: LiveData<List<MovieItemModel>>

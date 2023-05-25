@@ -1,7 +1,7 @@
 package com.example.cinemaapp.data.room.repository
 
 import androidx.lifecycle.LiveData
-import com.example.cinemaapp.models.MovieItemModel
+import com.example.cinemaapp.models.movies.MovieItemModel
 
 interface MoviesRepository {
     val allMovies: LiveData<List<MovieItemModel>>
