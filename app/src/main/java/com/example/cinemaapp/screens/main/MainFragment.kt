@@ -2,7 +2,6 @@ package com.example.cinemaapp.screens.main
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.MAIN
 import com.example.cinemaapp.R
 import com.example.cinemaapp.databinding.FragmentMainBinding
-import com.example.cinemaapp.models.MovieItemModel
+import com.example.cinemaapp.models.movies.MovieItemModel
 
 class MainFragment : Fragment() {
 
@@ -31,23 +30,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Скрываем название приложения в ActionBar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowCustomEnabled(true)
-
-        // Устанавливаем макет с поиском в ActionBar
-        val searchLayout = layoutInflater.inflate(R.layout.search_layout, null)
-
-        // Получаем ссылку на ActionBar
-        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-
-        // Устанавливаем пользовательское представление только для фрагмента MainFragment
-        actionBar?.let {
-            if (it.customView == null) {
-                it.setCustomView(searchLayout)
-            }
-        }
-
 
         init()
     }
@@ -79,6 +63,4 @@ class MainFragment : Fragment() {
             MAIN.navController.navigate(R.id.action_mainFragment_to_detailFragment, bundle)
         }
     }
-
-
 }
