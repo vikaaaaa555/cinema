@@ -15,13 +15,14 @@ data class MovieItemModel(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
+
+    @ColumnInfo
     val id: Int,
     val original_language: String,
     val original_title: String,
 
     @ColumnInfo
     val overview: String,
-
     val popularity: Double,
 
     @ColumnInfo
@@ -33,6 +34,8 @@ data class MovieItemModel(
     @ColumnInfo
     val title: String,
     val video: Boolean,
+
+    @ColumnInfo
     val vote_average: Double,
     val vote_count: Int
 ): Serializable
