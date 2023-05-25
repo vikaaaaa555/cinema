@@ -7,7 +7,6 @@ import androidx.navigation.Navigation
 import com.example.cinemaapp.databinding.ActivityMainBinding
 import com.example.cinemaapp.screens.main.MainMenuProvider
 
-
 class MainActivity : AppCompatActivity() {
 
     private var mBinding: ActivityMainBinding?= null
@@ -21,9 +20,7 @@ class MainActivity : AppCompatActivity() {
         MAIN = this
         navController = Navigation.findNavController(this, R.id.nav_host)
 
-        // Создаем новый экземпляр класса MyMenuProvider
         val menuProvider = MainMenuProvider()
-        // Добавляем его в качестве провайдера меню
         addMenuProvider(menuProvider)
     }
 
