@@ -18,5 +18,4 @@
         tools:listitem="@layout/item_layout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
